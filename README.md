@@ -55,58 +55,27 @@ The Stata pipeline does four things:
 - [09_psm_did_susenas.do](stata/09_psm_did_susenas.do) — SUSENAS AREG (absorb kk) for KDP/UPP, heterogeneity & placebo
 </details>
 
-## What's in here & instructions
-
-**Document types**
-- `.do` → Stata dofile
-
-<details open>
-  <summary><b>How to run (end-to-end)</b></summary>
-
-1) **Retrieve data from WRDS**
-   - **Small firms:**  
-     `python python/01_orbis_batch_small.py`  
-     or `qsub python/01_orbis_batch_small.sh`
-   - **Medium & large firms:**  
-     `python python/02_orbis_batch_medlarge.py`  
-     or `qsub python/02_orbis_batch_medlarge.sh`
-   - *(Optional, last step)* **Compustat batch:**  
-     `python python/06_compustat_batch.py`  
-     or `qsub python/06_compustat_batch.sh`
-
-2) **Append yearly Parquet splits**  
-   `python python/03_append_parquet.py`  
-   or `qsub python/03_append_parquet.sh`
-
-3) **Merge & clean (build analysis dataset)**  
-   `python python/04_clean_db.py`  
-   or `qsub python/04_clean_db.sh`
-
-4) **(HPC quick commands)** — run from your `scratch` directory
-   ```bash
-   chmod +x <filename>.sh
-   qsub <filename>.sh
-   qstat -u <username>
-   tail -F <jobname>.log
-
-5) **Export parquet to .csv**
-   `python python/05_parquet_to_csv.py`
-   
-6) Download to local computer
-   Using PuTTY/PSCP (Windows): `pscp -r <user>@<cluster>:/path/to/project/data ./data`
-
-7) Run Stata regressions and export outputs (On Progress)
-   Open the `stata/` folder and run in order
-</details>
+## Methods and variables (short)
+* Matching: `psmatch2` kernel & nearest-neighbor at kecamatan (KDP/UPP treatment).
+* Indices: recode items → `zscore` → `egen rowtotal` → IRT (`irt rsm`, `irt 1pl`) → `predict` latents:
+  * `bonding_i`, `latbonding_i`
+  * `bridging_i`, `latbridging_i`
+  * `par_i`, `latpar_i`
+* Controls (person): `age`, `yedu` (years of education), `hhsize`, `lnpce` (ln of per capita expenditure), `male`, `urban`.
+* Controls (district): `fi_nc` (EFI), `pi_nc` (EPI), `palma`.
+* Heterogeneity: `lowsc_c` (baseline social capital <0), `agricom` (≥50% HH with farming occupation in community), `irigasi` (presence of irrigation infrastructure in the community).
 
 ## Requirements
-- **WRDS access**
-- **Python 3.10+** (`pandas`/`polars`, `wrds`, `pyarrow`, `duckdb`)
-- **Stata 16+** with:
+- Stata 15+ (IRT available since 14). Install once:
   ```stata
-  ssc install ftools, replace
-  ssc install reghdfe, replace
-  ssc install estout, replace
+  ssc install psmatch2, replace
   ssc install outreg2, replace
+  ssc install asdoc, replace
+  ssc install binscatter, replace
+  ssc install estout, replace      // esttab/eststo if used
+  ssc install renvars, replace
+  ssc install zscore, replace      // or egen std()
 
 ## Author
+Prepared (from scratch!) by Lovina Aisha Malika Putri. Comments and replication issues welcome. 
+Backstory: This is my first long codebase, created during January–June 2021, the last semester of my undergrad. It was a period when impact evaluation was a big deal and there was so many DiD methods modifications released, and RCT studies / impact evaluation received a lot of recognition after the 2019 Nobel Prize...and turns out DiD & LATE made notable contribution in 2021 Nobel Prize. Since I could only use secondary data, I adapted impact-evaluation / quasi-experimental methods.

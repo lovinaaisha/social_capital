@@ -39,38 +39,25 @@ The Stata pipeline does four things:
 - [README.md](README.md)
 - [LICENSE](LICENSE)
 
-**Python scripts** — `python/`
-- [01_orbis_batch_small.py](python/01_orbis_batch_small.py) — WRDS pull: small firms  
-- [01_orbis_batch_small.sh](python/01_orbis_batch_small.sh) — HPC wrapper  
-- [02_orbis_batch_medlarge.py](python/02_orbis_batch_medlarge.py) — WRDS pull: medium/large  
-- [02_orbis_batch_medlarge.sh](python/02_orbis_batch_medlarge.sh)  
-- [03_append_parquet.py](python/03_append_parquet.py) — append yearly parquet  
-- [03_append_parquet.sh](python/03_append_parquet.sh)  
-- [04_clean_db.py](python/04_clean_db.py) — merge, clean, construct vars  
-- [04_clean_db.sh](python/04_clean_db.sh)  
-- [05_parquet_to_csv.py](python/05_parquet_to_csv.py) — optional csv export  
-- [06_compustat_batch.py](python/06_compustat_batch.py) — WRDS pull: Compustat  
-- [06_compustat_batch.sh](python/06_compustat_batch.sh)
+**Paper and presentation** - `paper/`
+- Presentation_Undergraduate Thesis_Lovina Aisha Malika Putri.pdf
+- Writing Sample_Undergraduate Thesis Short Version_Lovina Aisha Malika Putri.pdf
 
 **Stata do-files** — `stata/`
-- [01_append_csv.do](stata/01_append_csv.do) — read processed data / glue  
-- [02_compustat.do](stata/02_compustat.do) — merge Compustat/External Financial Dependency inputs  
-- [03_io.do](stata/03_io.do) — IO / deflators / sector maps  
-- [04_tfpr_real.do](stata/04_tfpr_real.do) — Hsieh-Klenow (2009) real wedges & TFPR(real)  
-- [05_finance_loop.do](stata/05_finance_loop.do) — build finance metrics  
-- [06_sigma.do](stata/06_sigma.do) — estimate σ / elasticities  
-- [07_tfpr_finance.do](stata/07_tfpr_finance.do) — Whited-Zhao (2021) finance wedges  
-- [08_desc_stat.do](stata/08_desc_stat.do) — descriptive stats / tables  
-- [09_regression.do](stata/09_regression.do) — main regressions + exports
+- [01_susenas.do](stata/01_susenas.do) — Build SUSENAS HH/IND panel (2009/2012), social-capital indices  
+- [02_podes.do](stata/02_podes.do) — Community features from PODES/Census (e.g., irrigation), EFI/EPI/Palma merges
+- [03_outcome_ifls_psm.do](stata/03_outcome_ifls_psm.do) — IFLS 2007/2014: construct outcomes (Z & IRT), assets/PCE, community PAP (KDP/UPP)
+- [04_merge_ifls_bps.do](stata/04_merge_ifls_bps.do) — Join IFLS with BPS-based district controls; create match keys  
+- [05_ifls_psm_2007.do](stata/05_ifls_psm_2007.do) — PSM at kecamatan (kernel & NN-matching) using IFLS-CF 2007; export matched panels
+- [06_outcome_susenas_psm.do](stata/06_outcome_susenas_psm.do) — Collapse SUSENAS outcomes to district/kecamatan for PSM merges (2009/2012)
+- [07_merge_susenas.do](stata/07_merge_susenas.do) — Merge PSM panels ↔ SUSENAS; build treatment switches (kdp_tr/upp_tr)
+- [08_psm_did_ifls.do](stata/08_psm_did_ifls.do) — IFLS person-level FE/DiD (KDP & UPP), heterogeneity, binscatter, tables  
+- [09_psm_did_susenas.do](stata/09_psm_did_susenas.do) — SUSENAS AREG (absorb kk) for KDP/UPP, heterogeneity & placebo
 </details>
 
 ## What's in here & instructions
 
 **Document types**
-- `.py` → Python scripts
-- `.sh` → shell/HPC job wrappers
-- `.log` → run logs
-- `.csv` / `.parquet` → data files *(gitignored)*
 - `.do` → Stata dofile
 
 <details open>

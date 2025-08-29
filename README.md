@@ -78,4 +78,4 @@ The Stata pipeline does four things:
 
 ## Author
 Prepared (from scratch!) by Lovina Aisha Malika Putri. Comments and replication issues welcome. 
-Backstory: This is my first long codebase, created during January–June 2021, the last semester of my undergrad. It was a period when impact evaluation was a big deal and there was so many DiD methods modifications released, and RCT studies / impact evaluation received a lot of recognition after the 2019 Nobel Prize...and turns out DiD & LATE made notable contribution in 2021 Nobel Prize. Since I could only use secondary data, I adapted impact-evaluation / quasi-experimental methods.
+Backstory: This is my first long codebase, created during January–June 2021, the last semester of my undergrad. It was a period when impact evaluation was a big deal and there was so many DiD methods modifications released, and RCT studies / impact evaluation received a lot of recognition after the 2019 Nobel Prize...and turns out DiD & LATE made notable contribution in 2021 Nobel Prize. Since I could only use secondary data, I adapted impact-evaluation / quasi-experimental methods for my undergrad honors thesis.
